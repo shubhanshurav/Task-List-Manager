@@ -1,0 +1,81 @@
+Final Questions:
+
+1. How did you handle inline editing in the table?
+
+Handling Inline Editing in the Table:
+Inline Editing: You used the ReactTabulator component and its cellEdited event to handle inline editing. When a cell is edited, the cellEdited callback function is triggered. This function retrieves the updated task data and updates the tasks state accordingly.
+
+<ReactTabulator
+  data={filteredTasks}
+  columns={taskColumns(setTasks)}
+  layout="fitData"
+  options={{
+    cellEdited: (cell) => {
+      const updatedTask = cell.getRow().getData();
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === updatedTask.id ? updatedTask : task
+        )
+      );
+    },
+  }}
+/>
+
+
+2. Explain how you fetched and processed the data from the dummy API.
+
+Fetching and Processing Data from the Dummy API:
+Data Fetching: You likely utilized the useFetchTask custom hook to fetch data from a dummy API. The hook manages the state for tasks and handles the data fetching process using useEffect
+const useFetchTask = () => {
+  const [tasks, setTasks] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('dummy-api-endpoint');
+        const data = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+  return { tasks, setTasks };
+};
+
+3. What approach did you use to filter tasks based on status?
+
+Filtering Tasks Based on Status:
+Filtering Approach: You implemented a filter by status using a state variable statusFilter. The filteredTasks array is derived from the original tasks array by filtering it based on the selected status.
+
+const [statusFilter, setStatusFilter] = useState("");
+
+const filteredTasks = statusFilter
+  ? tasks.filter((task) => task.status === statusFilter)
+  : tasks;
+
+
+4. How did you manage the state of tasks when adding or editing them?
+
+Managing State of Tasks When Adding or Editing:
+State Management: You managed the state using useState and updated it through callback functions passed to various components. For adding a task, you updated the tasks array to include the new task. For editing, as seen in the inline editing logic, you mapped through the tasks array and updated the specific task.
+
+// Adding a task
+const handleAddTask = (newTask) => {
+  setTasks((prevTasks) => [...prevTasks, newTask]);
+};
+
+
+5. What challenges did you face during development, and how did you overcome them
+
+Challenges and Solutions:
+Challenge 1: Fetching Data:
+Solution: Ensuring robust error handling and efficient data fetching techniques. Using try-catch blocks to handle potential errors and ensure the application remains stable.
+
+Challenge 2: Performance Optimization:
+Solution: Utilizing memoization techniques like useMemo or useCallback to prevent unnecessary re-renders and improve performance.
+
+Challenge 3: State Management:
+Solution: Ensuring state updates are handled correctly, especially when dealing with nested components and complex state transformations. Using state hooks and callback functions to manage state effectively.
