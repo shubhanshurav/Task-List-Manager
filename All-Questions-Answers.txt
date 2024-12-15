@@ -66,12 +66,5 @@ const handleAddTask = (newTask) => {
 
 5. What challenges did you face during development, and how did you overcome them
 
-Challenges and Solutions:
-Challenge 1: Fetching Data:
-Solution: Ensuring robust error handling and efficient data fetching techniques. Using try-catch blocks to handle potential errors and ensure the application remains stable.
-
-Challenge 2: Performance Optimization:
-Solution: Utilizing memoization techniques like useMemo or useCallback to prevent unnecessary re-renders and improve performance.
-
-Challenge 3: State Management:
-Solution: Ensuring state updates are handled correctly, especially when dealing with nested components and complex state transformations. Using state hooks and callback functions to manage state effectively.
+Handling inline editing for dynamically fetched data was tricky initially. I resolved it by carefully configuring ReactTabulator's editor properties and events.
+Filtering tasks dynamically while keeping the original data intact required managing state efficiently, which I addressed using React's state management effectively.
